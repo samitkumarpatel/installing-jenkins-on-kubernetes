@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins
+data: 
+  jcasc.yaml: |-
+    jenkins:
+      systemMessage: "Hello, Welcome to Jenkins on k8s!"
+      agentProtocols:
+        - "JNLP4-connect"
+        - "Ping"
+      crumbIssuer:
+        standard:
+          excludeClientIPFromCrumb: true
+      disableRememberMe: false
+      markupFormatter: "plainText"
+      mode: NORMAL
+      myViewsTabBar: "standard"
+      numExecutors: 1
+      securityRealm:
+        local:
+          allowsSignup: false
+          enableCaptcha: false
+          users:
+            - id: "admin"
+              password: "admin123"
+            - id: "user"
+              password: "user123"
+      authorizationStrategy:
+        globalMatrix:
+          permissions:
+          - "Agent/Build:user"
+          - "Job/Build:user"
+          - "Job/Cancel:user"
+          - "Job/Read:user"
+          - "Overall/Read:user"
+          - "View/Read:user"
+          - "Overall/Read:anonymous"
+          - "Overall/Administer:admin"
+          - "Overall/Administer:root"
+    

@@ -1,0 +1,38 @@
+---
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: jenkins
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: jenkins
+      template:
+        metadata:
+          labels:
+            app: jenkins
+        spec:
+          serviceAccountName: jenkins
+          containers:
+          - name: jenkins
+            image: samitkumarpatel/jenkins:lts
+            env:
+            - name: JAVA_OPTS
+              value: "-Djenkins.install.runSetupWizard=false"
+            - name: CASC_JENKINS_CONFIG
+              value: "/var/jenkins_home/casc_configs/jcasc.yaml"
+            ports:
+            - containerPort: 8080
+            - containerPort: 50000
+            volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+            - name: jcac
+              mountPath: /var/jenkins_home/casc_configs
+          volumes:
+          - name: jenkins-home
+            emptyDir: {}
+          - name: jcac
+            configMap:
+              name: jenkins
