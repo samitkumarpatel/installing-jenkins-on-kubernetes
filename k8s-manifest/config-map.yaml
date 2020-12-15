@@ -17,7 +17,7 @@ data:
       markupFormatter: "plainText"
       mode: NORMAL
       myViewsTabBar: "standard"
-      numExecutors: 1
+      numExecutors: 5
       securityRealm:
         local:
           allowsSignup: false
@@ -39,4 +39,12 @@ data:
           - "Overall/Read:anonymous"
           - "Overall/Administer:admin"
           - "Overall/Administer:root"
+      clouds:
+      - kubernetes:
+          containerCap: 10
+          containerCapStr: "10"
+          jenkinsUrl: "http://localhost:8080"
+          name: "kubernetes"
+          namespace: "jenkins"
+          serverUrl: "https://kubernetes.docker.internal:6443"
     
