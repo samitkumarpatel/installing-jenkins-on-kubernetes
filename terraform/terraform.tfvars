@@ -1,0 +1,2 @@
+name = "jenkins"
+namespace = "jenkins"
