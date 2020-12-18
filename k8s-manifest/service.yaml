@@ -9,8 +9,10 @@ spec:
     - name: "http"
       port: 8080
       targetPort: 8080
+      nodePort: 31000
     - name: "jnlp"
       port: 50000
       targetPort: 50000
+      nodePort: 31001
   selector:
     app: jenkins

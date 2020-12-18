@@ -1,2 +1,0 @@
-name = "jenkins"
-namespace = "jenkins"

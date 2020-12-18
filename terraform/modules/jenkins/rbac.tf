@@ -6,59 +6,32 @@ resource "kubernetes_service_account" "jenkins" {
   }
 }
 
+
 # ClusterRole
 resource "kubernetes_cluster_role" "jenkins" {
   metadata {
     name = var.name
-    annotations = {
-      "rbac.authorization.kubernetes.io/autoupdate" = "true"
-    }
-    labels = {
-      "kubernetes.io/bootstrapping" = "rbac-defaults"
-    }
-  }
-  rule {
-    api_groups = ["*"]
-    resources  = ["statefulsets"
-      , "services"
-      , "replicationcontrollers"
-      , "replicasets"
-      , "podtemplates"
-      , "podsecuritypolicies"
-      , "pods"
-      , "pods/log"
-      , "pods/exec"
-      , "podpreset"
-      , "poddisruptionbudget"
-      , "persistentvolumes"
-      , "persistentvolumeclaims"
-      , "jobs"
-      , "endpoints"
-      , "deployments"
-      , "deployments/scale"
-      , "daemonsets"
-      , "cronjobs"
-      , "configmaps"
-      , "namespaces"
-      , "events"
-      , "secrets"
-    ]
-    verbs      = ["create","delete","get","list","patch","update","watch","apply"]
   }
   rule {
     api_groups = [""]
-    resources  = ["nodes"]
-    verbs      = ["get","list","watch", "update"]
+    resources  = ["pods"]
+    verbs      = ["create","delete","get","list","patch","update","watch"]
+  }
+  rule {
+    api_groups = [""]
+    resources  = ["pods/exec"]
+    verbs      = ["create","delete","get","list","patch","update","watch"]
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["pods/log"]
+   verbs      = ["get","list","watch"]
   }
 
   # rule {
   #   api_groups = [""]
-  #   resources  = ["pods"]
-  #  verbs      = ["create","delete","get","list","patch","update","watch"]
-  # }
-  # rule {
-  #   api_groups = [""]
-  #   resources  = ["pods/exec"]
+  #   resources  = 
   #   verbs      = ["create","delete","get","list","patch","update","watch"]
   # }
   # rule {

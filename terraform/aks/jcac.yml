@@ -38,5 +38,5 @@ jenkins:
         containerCap: 10
         containerCapStr: "10"
         name: "kubernetes"
-        namespace: "x"
+        namespace: "jenkins"
         serverUrl: "https://kubernetes.docker.internal:6443"

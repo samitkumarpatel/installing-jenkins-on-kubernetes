@@ -12,7 +12,7 @@ resource "kubernetes_config_map" "jenkins" {
   }
 
   data = {
-    "jcac.yaml" = file("${path.module}/jcac.yml")
+    "jcac.yaml" = var.jcac_config #file("${path.module}/jcac.yml")
   }
 }
 
@@ -101,11 +101,13 @@ resource "kubernetes_service" "jenkins" {
       name = "http"
       port        = 8080
       target_port = 8080
+      node_port = 32000
     }
     port {
       name = "jnlp"
       port        = 50000
       target_port = 50000
+      node_port = 32001
     }
     
   }
