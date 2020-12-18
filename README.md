@@ -48,9 +48,20 @@ With various method we can install Jenkins on k8s.
             └── variable.tf
 ```
 
-- `jenkins-image` :  
-- `k8s-manifest` : 
-- `terraform`: This contains all the terraform stacks and module HCL script.
+- `jenkins-image` :  This folder contain a Dockerfile to build a customise Jenkins image of your choice 
+```
+docker build -t samitkumarpatel/jenkins:lts -f image/Dockerfile .
+docker login -u samitkumarpatel -p $DOCKER_REGISTRY_PASSWORD
+docker push samitkumarpatel/jenkins:lts
+```
+- `k8s-manifest` : This folder contain , k8s api inputs to create Deployment, Service, RBAC, which will help Jenkins to run and create dynamic slave when a build demand it.
+
+```
+kubectl create namespace jenkins
+kubectl apply -f k8s-manifest/ -n jenkins
+```
+
+- `terraform`: This folder contains the terraform stacks and module script to provision k8s cluster and Jenkins wiith 0 manual configation effort.
 ```
 └── terraform
     ├── aks
@@ -74,4 +85,12 @@ With various method we can install Jenkins on k8s.
             ├── main.tf
             ├── rbac.tf
             └── variable.tf
+```
+
+To invoke this with a automation tool
+```
+cd terraform/aks
+terraform init && terraform validate
+terraform plan
+terraform apply --auto-approved
 ```
