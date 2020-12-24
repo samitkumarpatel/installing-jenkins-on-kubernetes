@@ -14,8 +14,8 @@ spec:
         app: jenkins
     spec:
       serviceAccountName: jenkins
-      # securityContext:
-      #   runAsUser: 0
+      securityContext:
+        runAsUser: 0
       containers:
       - name: jenkins
         image: samitkumarpatel/jenkins:lts
@@ -34,9 +34,9 @@ spec:
           mountPath: /var/jenkins_home/casc_configs
       volumes:
       - name: jenkins-home
-        # persistentVolumeClaim:
-        #   claimName: jenkins-pv-claim
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: jenkins-pv-claim
+        #emptyDir: {}
       - name: jcac
         configMap:
           name: jenkins

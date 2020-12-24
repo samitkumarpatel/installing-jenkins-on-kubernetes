@@ -12,4 +12,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/var/folders"
+    path: "/Users/samitkumarpatel/docker-desktop-volumes/jenkins"
